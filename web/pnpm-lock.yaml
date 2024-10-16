@@ -41,6 +41,9 @@ importers:
       vuex:
         specifier: 3.6.2
         version: 3.6.2(vue@2.6.14)
+      web:
+        specifier: 'file:'
+        version: 'file:'
     devDependencies:
       '@vue/cli-plugin-eslint':
         specifier: 4.5.13
@@ -4261,6 +4264,9 @@ packages:
   wcwidth@1.0.1:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
 
+  'web@file:':
+    resolution: {directory: '', type: directory}
+
   webpack-bundle-analyzer@3.9.0:
     resolution: {integrity: sha512-Ob8amZfCm3rMB1ScjQVlbYYUEJyEjdEtQ92jqiFUYt5VkEeO2v5UMbv49P/gnmCZm3A6yaFQzCBvpZqN4MUsdA==}
     engines: {node: '>= 6.14.4'}
@@ -5169,7 +5175,7 @@ snapshots:
 
   axios@0.24.0:
     dependencies:
-      follow-redirects: 1.15.9(debug@4.3.7(supports-color@6.1.0))
+      follow-redirects: 1.15.9(debug@4.3.7)
     transitivePeerDependencies:
       - debug
 
@@ -6598,10 +6604,6 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 2.3.8
 
-  follow-redirects@1.15.9(debug@4.3.7(supports-color@6.1.0)):
-    optionalDependencies:
-      debug: 4.3.7(supports-color@6.1.0)
-
   follow-redirects@1.15.9(debug@4.3.7):
     optionalDependencies:
       debug: 4.3.7(supports-color@6.1.0)
@@ -6926,9 +6928,9 @@ snapshots:
 
   http-parser-js@0.5.8: {}
 
-  http-proxy-middleware@0.19.1(debug@4.3.7(supports-color@6.1.0))(supports-color@6.1.0):
+  http-proxy-middleware@0.19.1(debug@4.3.7)(supports-color@6.1.0):
     dependencies:
-      http-proxy: 1.18.1(debug@4.3.7(supports-color@6.1.0))
+      http-proxy: 1.18.1(debug@4.3.7)
       is-glob: 4.0.3
       lodash: 4.17.21
       micromatch: 3.1.10(supports-color@6.1.0)
@@ -6943,14 +6945,6 @@ snapshots:
       is-glob: 4.0.3
       is-plain-obj: 3.0.0
       micromatch: 4.0.8
-    transitivePeerDependencies:
-      - debug
-
-  http-proxy@1.18.1(debug@4.3.7(supports-color@6.1.0)):
-    dependencies:
-      eventemitter3: 4.0.7
-      follow-redirects: 1.15.9(debug@4.3.7(supports-color@6.1.0))
-      requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
 
@@ -9345,6 +9339,22 @@ snapshots:
     dependencies:
       defaults: 1.0.4
 
+  'web@file:':
+    dependencies:
+      axios: 0.24.0
+      dayjs: 1.10.7
+      element-ui: 2.15.1(vue@2.6.14)
+      highlight.js: 10.7.3
+      jquery: 3.4.1
+      marked: 4.0.10
+      nprogress: 0.2.0
+      v-emoji-picker: 2.1.7(vue@2.6.14)
+      vue: 2.6.14
+      vue-router: 3.5.1(vue@2.6.14)
+      vuex: 3.6.2(vue@2.6.14)
+    transitivePeerDependencies:
+      - debug
+
   webpack-bundle-analyzer@3.9.0:
     dependencies:
       acorn: 7.4.1
@@ -9390,7 +9400,7 @@ snapshots:
       del: 4.1.1
       express: 4.21.1(supports-color@6.1.0)
       html-entities: 1.4.0
-      http-proxy-middleware: 0.19.1(debug@4.3.7(supports-color@6.1.0))(supports-color@6.1.0)
+      http-proxy-middleware: 0.19.1(debug@4.3.7)(supports-color@6.1.0)
       import-local: 2.0.0
       internal-ip: 4.3.0
       ip: 1.1.9
