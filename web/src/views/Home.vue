@@ -3,7 +3,7 @@
     <div class="mb-7">
       <div class="bgImg d-flex jc-center" id="header">
         <div class="text-white d-flex jc-center ai-center">
-          <span class="shouye-text">欢迎来到趣味硬件</span>
+          <span class="shouye-text">欢迎来到硬件趣玩</span>
           <span class="line-down pl-3">_</span>
         </div>
         <div class="arrow-down">

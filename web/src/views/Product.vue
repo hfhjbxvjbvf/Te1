@@ -3,7 +3,9 @@
 
     <div class="main-content">
       <!-- 分类标题 -->
-      <div class="category-title">{{ currentCategory }}</div>
+      <div>
+        
+      </div>
 
       <!-- 商品列表 -->
       <div class="product-list">
@@ -38,12 +40,12 @@ export default {
     fetchProducts() {
       // 这里是从API获取数据的示例
       this.products = [
-        { _id: 1, name: 'Product 1', description: 'Description for product 1', price: 100, image: 'https://via.placeholder.com/150' },
-        { _id: 2, name: 'Product 2', description: 'Description for product 2', price: 200, image: 'https://via.placeholder.com/150' },
-        { _id: 3, name: 'Product 2', description: 'Description for product 2', price: 200, image: 'https://via.placeholder.com/150' },
-        { _id: 4, name: 'Product 2', description: 'Description for product 2', price: 200, image: 'https://via.placeholder.com/150' },
-        { _id: 5, name: 'Product 2', description: 'Description for product 2', price: 200, image: 'https://via.placeholder.com/150' },
-        { _id: 6, name: 'Product 2', description: 'Description for product 2', price: 200, image: 'https://via.placeholder.com/150' },
+        { _id: 1, name: 'Product 1', description: '晚点做商品', price: 100, image: '../assets/images/shop/Intel Pentium3 CPU dieshot.png' },
+        { _id: 2, name: 'Product 2', description: '丑陋的没事', price: 200, image: '../assets/images/shop/Intel Xeon 2696V2 dieshot.png' },
+        { _id: 3, name: 'Product 2', description: '能用就行', price: 200, image: '../assets/images/shop/Intel Xeon E5 2630.png' },
+        { _id: 4, name: 'Product 2', description: '我也不知道这是什么商品', price: 200, image: '../assets/images/shop/Intel Xeon E5 2666V3 dieshot.jpg' },
+        { _id: 5, name: 'Product 2', description: '阿爸阿爸阿爸', price: 200, image: '../assets/images/shop/Intel Xeon E5 2699V3 dieshot.png' },
+        { _id: 6, name: 'Product 2', description: '阿里巴巴是快乐的青年', price: 200, image: '../assets/images/shop/Intel Xeon Phi(1th).JPG' },
         // 更多商品...
       ];
     }

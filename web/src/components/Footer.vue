@@ -62,7 +62,7 @@
           </div>
         </div>
         <div class="px-8">
-          <div class="text-grey-1 fs-md mt-5">趣味硬件</div>
+          <div class="text-grey-1 fs-md mt-5">硬件趣玩</div>
           <div class="text-grey-2 fs-sm hand">
             <router-link
               tag="p"
