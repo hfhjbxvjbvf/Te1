@@ -22,6 +22,10 @@
             <el-menu-item index="/comments/list">评论列表</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
+            <template slot="title">商品</template>
+            <el-menu-item index="/products/create">商品上架</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group>
             <template slot="title">友链</template>
             <el-menu-item index="/links/create">新建友链</el-menu-item>
             <el-menu-item index="/links/list">友链列表</el-menu-item>

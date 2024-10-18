@@ -12,7 +12,7 @@
 #### 1. 克隆项目至本地：
 
 ```sh
-$ git clone git@github.com:miqilin21/vue-blog.git
+$ git clone git@github.com:hfhjbxvjbvf/Te1.git
 $ cd vue-blog
 $ pnpm i
 ```

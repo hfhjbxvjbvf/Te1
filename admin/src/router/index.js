@@ -65,6 +65,10 @@ const router = new VueRouter({
           component: () => import( /* webpackChunkName: "message_list" */ '../views/MessageList.vue'),
         },
         {
+          path:"/products/create",
+          component: () => import( /* webpackChunkName: "product_edit" */ '../views/Product.vue'),
+        },
+        {
           path: "/users/list",
           component: () => import( /* webpackChunkName: "link_list" */ '../views/UserList.vue'),
         },
