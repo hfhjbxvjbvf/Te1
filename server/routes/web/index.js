@@ -7,6 +7,7 @@ module.exports = app => {
   const Category = mongoose.model("Category");
   const Comment = mongoose.model("Comment");
   const Message = mongoose.model("Message");
+  const Product = mongoose.model("Product");
   const User = mongoose.model("User");
 
   // 文章列表
@@ -167,6 +168,27 @@ module.exports = app => {
     })
     res.send(comments)
   })
+
+  //产品
+  // 获取所有产品
+router.get('/products', async (req, res) => {
+  try {
+    const products = await Product.find().limit(100);
+    res.send(products);
+  } catch (error) {
+    res.status(400).send({ message: '获取产品失败' });
+  }
+});
+
+// 获取单个产品
+router.get('/products/:id', async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    res.send(product);
+  } catch (error) {
+    res.status(400).send({ message: '获取产品详情失败' });
+  }
+});
 
   // 留言
   router.post('/messages', async (req, res) => {

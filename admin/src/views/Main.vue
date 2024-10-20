@@ -24,6 +24,7 @@
           <el-menu-item-group>
             <template slot="title">商品</template>
             <el-menu-item index="/products/create">商品上架</el-menu-item>
+            <el-menu-item index="/products/list">商品列表</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
             <template slot="title">友链</template>

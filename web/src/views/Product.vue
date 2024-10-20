@@ -2,10 +2,6 @@
   <div class="main-container">
 
     <div class="main-content">
-      <!-- 分类标题 -->
-      <div>
-        
-      </div>
 
       <!-- 商品列表 -->
       <div class="product-list">
@@ -30,11 +26,12 @@
 export default {
   data() {
     return {
-      products: [] // 商品数据
+      products: [], // 商品数据
     };
   },
   mounted() {
     this.fetchProducts();
+    this.getData()
   },
   methods: {
     fetchProducts() {
@@ -48,6 +45,11 @@ export default {
         { _id: 6, name: 'Product 2', description: '阿里巴巴是快乐的青年', price: 200, image: '../assets/images/shop/Intel Xeon Phi(1th).JPG' },
         // 更多商品...
       ];
+    },
+    async getData(){
+      const data = await this.$http.get('products')
+      console.log(data)
+      this.products = data.data
     }
   }
 };

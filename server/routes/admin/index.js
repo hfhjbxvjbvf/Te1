@@ -10,36 +10,71 @@ module.exports = (app) => {
   });
 
   // 创建产品
-  router.post('/products', async (req, res) => {
+router.post('/products', async (req, res) => {
+  console.log('请求体:', req.body);
+  try {
     const product = await Product.create(req.body);
     res.send(product);
-  });
+  } catch (error) {
+    res.status(400).send({ message: '创建产品失败' });
+  }
+});
 
-  // 更新产品
-  router.put('/products/:id', async (req, res) => {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body);
+// 更新产品
+router.put('/products/:id', async (req, res) => {
+  try {
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.send(product);
-  });
+  } catch (error) {
+    res.status(400).send({ message: '更新产品失败' });
+  }
+});
 
-  // 删除产品
-  router.delete('/products/:id', async (req, res) => {
+// 删除产品
+router.delete('/products/:id', async (req, res) => {
+  try {
     await Product.findByIdAndDelete(req.params.id);
-    res.send({
-      success: true,
-    });
-  });
-
-  // 获取所有产品
-  router.get('/products', async (req, res) => {
+    res.send({ success: true });
+  } catch (error) {
+    res.status(400).send({ message: '删除产品失败' });
+  }
+});
+// 获取所有产品
+router.get('/products', async (req, res) => {
+  try {
     const products = await Product.find().limit(100);
     res.send(products);
-  });
+  } catch (error) {
+    res.status(400).send({ message: '获取产品失败' });
+  }
+});
 
-  // 获取单个产品
-  router.get('/products/:id', async (req, res) => {
-    const product = await Product.findById(req.params.id);
-    res.send(product);
-  });
+router.post('/', async (req, res) => {
+  const model = await req.Model.create(req.body)
+  res.send(model)
+})
+router.put('/:id', async (req, res) => {
+  const model = await req.Model.findByIdAndUpdate(req.params.id, req.body)
+  res.send(model)
+})
+router.delete('/:id', async (req, res) => {
+  await req.Model.findByIdAndDelete(req.params.id, req.body)
+  res.send({
+    success: true,
+  })
+})
+router.get('/', async (req, res) => {
+  const queryOptions = {}
+  if (req.Model.modelName === 'Category') {
+    queryOptions.populate = 'parent'
+  }
+  const items = await req.Model.find().setOptions(queryOptions).limit(100)
+  res.send(items)
+})
+router.get('/:id', async (req, res) => {
+  const model = await req.Model.findById(req.params.id)
+  res.send(model)
+})
 
   // 登录校验中间件
   const authMiddleware = require('../../middleware/auth');

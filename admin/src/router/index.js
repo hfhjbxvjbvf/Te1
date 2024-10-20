@@ -15,70 +15,76 @@ const router = new VueRouter({
     {
       path: "/",
       name: "main",
-      component: () => import( /* webpackChunkName: "main" */ '../views/Main.vue'),
+      component: () => import('../views/Main.vue'),
       children: [{
           path: "/categories/create",
-          component: () => import( /* webpackChunkName: "category_edit" */ '../views/CategoryEdit.vue'),
+          component: () => import('../views/CategoryEdit.vue'),
         },
         {
           path: "/categories/edit/:id",
-          component: () => import( /* webpackChunkName: "category_edit" */ '../views/CategoryEdit.vue'),
+          component: () => import('../views/CategoryEdit.vue'),
           props: true
         },
         {
           path: "/categories/list",
-          component: () => import( /* webpackChunkName: "category_list" */ '../views/CategoryList.vue'),
+          component: () => import('../views/CategoryList.vue'),
         },
         {
           path: "/articles/create",
-          component: () => import( /* webpackChunkName: "article_edit" */ '../views/ArticleEdit.vue'),
+          component: () => import('../views/ArticleEdit.vue'),
         },
         {
           path: "/articles/edit/:id",
-          component: () => import( /* webpackChunkName: "article_edit" */ '../views/ArticleEdit.vue'),
+          component: () => import('../views/ArticleEdit.vue'),
           props: true
         },
         {
           path: "/articles/list",
-          component: () => import( /* webpackChunkName: "article_list" */ '../views/ArticleList.vue'),
+          component: () => import('../views/ArticleList.vue'),
         },
         {
           path: "/comments/list",
-          component: () => import( /* webpackChunkName: "comment_list" */ '../views/CommentList.vue'),
+          component: () => import('../views/CommentList.vue'),
           props: true
         },
         {
           path: "/links/create",
-          component: () => import( /* webpackChunkName: "link_edit" */ '../views/LinkEdit.vue'),
+          component: () => import('../views/LinkEdit.vue'),
         },
         {
           path: "/links/edit/:id",
-          component: () => import( /* webpackChunkName: "link_edit" */ '../views/LinkEdit.vue'),
+          component: () => import('../views/LinkEdit.vue'),
           props: true
         },
         {
           path: "/links/list",
-          component: () => import( /* webpackChunkName: "link_list" */ '../views/LinkList.vue'),
+          component: () => import('../views/LinkList.vue'),
         },
         {
           path: "/messages/list",
-          component: () => import( /* webpackChunkName: "message_list" */ '../views/MessageList.vue'),
+          component: () => import('../views/MessageList.vue'),
         },
+              //商品
         {
           path:"/products/create",
-          component: () => import( /* webpackChunkName: "product_edit" */ '../views/Product.vue'),
+          component: () => import( '../views/Product.vue'),
         },
         {
+          path:"/products/list",
+          component: () => import( '../views/ProductList.vue'),
+        },
+                  // 用户
+        {
           path: "/users/list",
-          component: () => import( /* webpackChunkName: "link_list" */ '../views/UserList.vue'),
+          component: () => import('../views/UserList.vue'),
         },
         {
           path: "/admin_users/create",
-          component: () => import( /* webpackChunkName: "admin_edit" */ '../views/AdminUserEdit.vue'),
+          component: () => import( '../views/AdminUserEdit.vue'),
         },
         {
           path: "/admin_users/edit/:id",
-          component: () => import( /* webpackChunkName: "admin_edit" */ '../views/AdminUserEdit.vue'),
+          component: () => import('../views/AdminUserEdit.vue'),
           props: true
         },
         {
