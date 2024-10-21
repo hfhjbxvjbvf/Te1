@@ -1,4 +1,4 @@
-<template>
+<template >
   <div class="mb-9">
     <div class="mb-7">
       <div class="bgImg d-flex jc-center" id="header">
@@ -154,7 +154,7 @@ export default {
 
 <style lang="scss" scoped>
 .bgImg {
-  background-image: url(https://miqilin-blog.oss-cn-shenzhen.aliyuncs.com/bg-blog.png);
+  //background-image: url(https://miqilin-blog.oss-cn-shenzhen.aliyuncs.com/bg-blog.png);
   width: 100%;
   height: 100vh;
   background-position: center;

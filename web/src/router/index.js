@@ -56,7 +56,7 @@ const routes = [{
       }
     },
     {
-      path:'/goods',
+      path:'/goods/:id',
       name:'Goods',
       component: () => import( '../views/Goods.vue'),
       meta: {

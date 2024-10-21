@@ -72,7 +72,6 @@ export default {
   },
   methods: {
     async saveProduct() {
-      console.log('保存商品');
       try {
         if (this.id) {
           await this.$http.put(`rest/products/${this.id}`, this.product);
@@ -100,9 +99,9 @@ export default {
         console.error('保存产品时发生错误:', error);
       }
     },
-    async fetchProduct() {
-      if (this.id) {
-        const res = await this.$http.get(`rest/products/${this.id}`);
+    async fetchProduct(id) {
+      if (id) {
+        const res = await this.$http.get(`rest/products/${id}`);
         this.product = res.data;
       }
     },
@@ -115,7 +114,8 @@ export default {
     },
   },
   created() {
-    this.id && this.fetchProduct();
+    this.fetchProduct(this.$route.params.id);
+    console.log(this.$route.params.id);
   },
 }
 </script>

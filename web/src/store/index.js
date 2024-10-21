@@ -9,6 +9,7 @@ export default new Vuex.Store({
       name: 'quwan',
       chinaName: '趣玩硬件',
     },
+    isDarkTheme: true,
   },
   mutations: {
     map_set_user_info(state, data) {
@@ -19,5 +20,10 @@ export default new Vuex.Store({
     },
   },
   actions: {},
-  modules: {}
+  modules: {},
+  computed:{
+    IsDark(){
+      return this.isDarkTheme
+    }
+  }
 });

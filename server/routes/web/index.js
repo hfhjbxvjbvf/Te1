@@ -171,14 +171,36 @@ module.exports = app => {
 
   //产品
   // 获取所有产品
-router.get('/products', async (req, res) => {
-  try {
-    const products = await Product.find().limit(100);
-    res.send(products);
-  } catch (error) {
-    res.status(400).send({ message: '获取产品失败' });
-  }
-});
+  router.get('/products', async (req, res) => {
+    try {
+      // 从请求查询参数中获取分类、页数和每页显示的条目数
+      const category = req.query.category;
+      const page = parseInt(req.query.page) || 1; // 默认为第一页
+      const limit = parseInt(req.query.limit) || 20; // 每页条目数，默认为20
+      
+      // 初始化查询条件
+      let query = {};
+  
+      // 如果有分类参数，添加分类过滤条件
+      if (category) {
+        query.category = category;
+      }
+  
+      // 计算跳过的条目数
+      const skip = (page - 1) * limit;
+      console.log(skip)
+  
+      // 查询数据库，应用分页
+      const products = await Product.find(query).skip(skip).limit(limit);
+  
+      // 返回产品数据
+      res.send(products);
+    } catch (error) {
+      res.status(400).send({ message: '获取产品失败' });
+    }
+  });
+  
+  
 
 // 获取单个产品
 router.get('/products/:id', async (req, res) => {

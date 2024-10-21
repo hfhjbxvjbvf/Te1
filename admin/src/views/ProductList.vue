@@ -2,8 +2,8 @@
     <div>
       <h1>商品列表</h1>
       <el-input
-        placeholder="搜索商品名称"
-        v-model="searchName"
+        placeholder="搜索商品分类"
+        v-model="searchCategory"
         @input="fetchProducts"
         style="margin-bottom: 20px;"
       />
@@ -40,7 +40,7 @@
     data() {
       return {
         products: [],
-        searchName: '',
+        searchCategory: '',
         currentPage: 1,
         pageSize: 10,
         totalProducts: 0,
@@ -51,10 +51,11 @@
         const res = await this.$http.get('rest/products');
         console.log(res);
         this.products = res.data;
+        this.totalProducts = res.data.length;
       },
       editProduct(id) {
         // 跳转到编辑页面
-        this.$router.push(`/products/edit/${id}`);
+        this.$router.push(`/products/create/${id}`);
       },
       async deleteProduct(id) {
         try {

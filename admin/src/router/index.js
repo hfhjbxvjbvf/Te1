@@ -66,7 +66,7 @@ const router = new VueRouter({
         },
               //商品
         {
-          path:"/products/create",
+          path:"/products/create/:id?",
           component: () => import( '../views/Product.vue'),
         },
         {
