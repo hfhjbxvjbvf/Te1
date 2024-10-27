@@ -9,6 +9,7 @@ module.exports = app => {
   const Message = mongoose.model("Message");
   const Product = mongoose.model("Product");
   const User = mongoose.model("User");
+  const Slideshow = mongoose.model("Slideshow");
 
   // 文章列表
   router.get("/articles/list", async (req, res) => {
@@ -169,7 +170,7 @@ module.exports = app => {
     res.send(comments)
   })
 
-  //产品
+  //--------------------------------------------------产品----------------------------
   // 获取所有产品
   router.get('/products', async (req, res) => {
     try {
@@ -185,7 +186,8 @@ module.exports = app => {
       if (category) {
         query.category = category;
       }
-  
+      console.log('Query:', query);
+      console.log('这是一个测试消息');
       // 计算跳过的条目数
       const skip = (page - 1) * limit;
       console.log(skip)
@@ -209,6 +211,17 @@ router.get('/products/:id', async (req, res) => {
     res.send(product);
   } catch (error) {
     res.status(400).send({ message: '获取产品详情失败' });
+  }
+});
+
+//获取全部产品轮播图
+router.get('/slideshow', async (req, res) => {
+  try {
+    const slideshow = await Slideshow.find();
+    
+    res.send(slideshow);
+  } catch (error) {
+    res.status(400).send({ message: '获取产品轮播图失败' });
   }
 });
 

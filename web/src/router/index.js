@@ -67,7 +67,28 @@ const routes = [{
       path: '/login',
       name: 'Login',
       component: () => import( '../views/Login.vue'),
-      meta: {}
+      meta: {
+        title: '登录 - QuWei'
+      }
+    },
+    {
+      path:'/user',
+      name: 'User',
+      component: () => import( '../views/User.vue'),
+      meta: {
+        title: '个人中心 - QuWei'
+      },
+      // children: [{
+      //   path: '/user/info',
+      //   name: 'UserInfo',
+      //   component: () => import( '../views/UserInfo.vue'),
+      //   meta: {
+      //     title: '个人中心 - QuWei'
+      //   }
+      // }, {
+      //  path: '/user/password',
+      // }
+      // ]
     },
     {
       path: '/about',

@@ -10,12 +10,12 @@
       <el-table-column prop="_id" label="ID" width="250"></el-table-column>
       <el-table-column prop="title" label="文章标题"></el-table-column>
       <el-table-column prop="createdAt" label="创建时间">
-        <template scope="scope">
+        <template slot-scope="scope">
           {{ scope.row.createdAt | date('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>
       <el-table-column prop="updatedAt" label="最后更新时间">
-        <template scope="scope">
+        <template slot-scope="scope">
           {{ scope.row.updatedAt | date('YYYY-MM-DD HH:mm:ss') }}
         </template>
       </el-table-column>

@@ -1,99 +1,42 @@
+
 module.exports = (app) => {
   const express = require('express');
   const assert = require('http-assert');
   const jwt = require('jsonwebtoken');
   const AdminUser = require('../../models/AdminUser');
-  const Product = require('../../models/Product'); // 引入产品模型
   const sendEmail = require('../../plugins/sendEmail.js');
+  const productRouter = require('./Product');
+  const Slideshow = require('../../models/Slideshow.js');
+  app.use('/admin/api/rest/products',productRouter);
   const router = express.Router({
     mergeParams: true,
   });
-
-  // 创建产品
-router.post('/products', async (req, res) => {
-  console.log('请求体:', req.body);
-  try {
-    const product = await Product.create(req.body);
-    res.send(product);
-  } catch (error) {
-    res.status(400).send({ message: '创建产品失败' });
-  }
-});
-
-// 更新产品
-router.put('/products/:id', async (req, res) => {
-  try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.send(product);
-  } catch (error) {
-    res.status(400).send({ message: '更新产品失败' });
-  }
-});
-
-// 删除产品
-router.delete('/products/:id', async (req, res) => {
-  try {
-    await Product.findByIdAndDelete(req.params.id);
-    res.send({ success: true });
-  } catch (error) {
-    res.status(400).send({ message: '删除产品失败' });
-  }
-});
-  // 获取所有产品
-  router.get('/products', async (req, res) => {
-    try {
-      // 从请求查询参数中获取分类、页数和每页显示的条目数
-      const category = req.query.category;
-      const page = parseInt(req.query.page) || 1; // 默认为第一页
-      const limit = parseInt(req.query.limit) || 20; // 每页条目数，默认为20
-  
-      // 初始化查询条件
-      let query = {};
-  
-      // 如果有分类参数，添加分类过滤条件
-      if (category) {
-        query.category = category;
-      }
-  
-      // 计算跳过的条目数
-      const skip = (page - 1) * limit;
-  
-      // 查询数据库，应用分页
-      const products = await Product.find(query).skip(skip).limit(limit);
-  
-      // 返回产品数据
-      res.send(products);
-    } catch (error) {
-      res.status(400).send({ message: '获取产品失败' });
-    }
-  });
-
-router.post('/', async (req, res) => {
-  const model = await req.Model.create(req.body)
-  res.send(model)
-})
-router.put('/:id', async (req, res) => {
-  const model = await req.Model.findByIdAndUpdate(req.params.id, req.body)
-  res.send(model)
-})
-router.delete('/:id', async (req, res) => {
-  await req.Model.findByIdAndDelete(req.params.id, req.body)
-  res.send({
-    success: true,
+  router.post('/', async (req, res) => {
+    const model = await req.Model.create(req.body)
+    res.send(model)
   })
-})
-router.get('/', async (req, res) => {
-  const queryOptions = {}
-  if (req.Model.modelName === 'Category') {
-    queryOptions.populate = 'parent'
-  }
-  const items = await req.Model.find().setOptions(queryOptions).limit(100)
-  res.send(items)
-})
-router.get('/:id', async (req, res) => {
-  const model = await req.Model.findById(req.params.id)
-  res.send(model)
-})
+  router.put('/:id', async (req, res) => {
+    const model = await req.Model.findByIdAndUpdate(req.params.id, req.body)
+    res.send(model)
+  })
+  router.delete('/:id', async (req, res) => {
+    await req.Model.findByIdAndDelete(req.params.id, req.body)
+    res.send({
+      success: true,
+    })
+  })
+  router.get('/', async (req, res) => {
+    const queryOptions = {}
+    if (req.Model.modelName === 'Category') {
+      queryOptions.populate = 'parent'
+    }
+    const items = await req.Model.find().setOptions(queryOptions).limit(100)
+    res.send(items)
+  })
+  router.get('/:id', async (req, res) => {
+    const model = await req.Model.findById(req.params.id)
+    res.send(model)
+  })
 
   // 登录校验中间件
   const authMiddleware = require('../../middleware/auth');

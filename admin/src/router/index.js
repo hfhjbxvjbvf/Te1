@@ -73,6 +73,10 @@ const router = new VueRouter({
           path:"/products/list",
           component: () => import( '../views/ProductList.vue'),
         },
+        {
+          path:"/slideshow",
+          component: () => import( '../views/ProductImages.vue'),
+        },
                   // 用户
         {
           path: "/users/list",

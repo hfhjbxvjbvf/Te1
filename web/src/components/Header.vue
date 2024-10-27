@@ -11,6 +11,15 @@
           {{ item.text }}
         </router-link>
       </div>
+      <div class="nav-item px-5 icon">
+            <!-- 判断有无token -->
+          <router-link to = "/login" v-if=1 >
+            登入
+          </router-link>
+          <router-link to = "/user" v-else >
+            个人页面
+          </router-link>
+        </div>
 
       <div class="play pl-5">
         <i v-show="!isPlay" class="iconfont icon-music-o nav-item" @click="playMusic(true)"></i>
@@ -22,12 +31,12 @@
       </div>
 
       <!-- 主题切换开关 -->
-      <div class="theme-switcher">
+      <!-- <div class="theme-switcher">
         <label class="switch">
           <input type="checkbox" v-model="isDarkTheme" @change="toggleTheme" />
           <span class="slider round"></span>
         </label>
-      </div>
+      </div> -->
     </div>
   </header>
 </template>
@@ -47,6 +56,7 @@ export default {
         { text: '留言', link: '/message' },
         { text: '关于', link: '/about' },
       ],
+      token: '',
     };
   },
   mounted() {

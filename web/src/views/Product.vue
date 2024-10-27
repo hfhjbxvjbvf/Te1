@@ -1,4 +1,4 @@
-<template >
+<template>
   <div class="main-container">
     <!-- 走马灯 -->
     <!-- <div class="carousel">
@@ -57,74 +57,29 @@ export default {
   data() {
     return {
       products: [], // 商品数据
-      page: 1, // 当前页码
       isLoading: false, // 加载状态
       currentCategory: 'CPU', // 当前分类
       categories: ['CPU', 'GPU', '苹果', '协处理器', '其他'], // 分类
-      // carouselImages: [
-      //   // 走马灯图片
-      //   '@assets/images/carousel1.jpg',
-      //   '@assets/images/carousel2.jpg',
-      //   '@assets/images/carousel3.jpg',
-      // ],
-    }
+    };
   },
   mounted() {
-    
-    this.fetchProducts(this.currentCategory)
-    window.addEventListener('scroll', this.handleScroll)
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll)
+    this.fetchProducts(this.currentCategory);
   },
   methods: {
-    async fetchProducts(category, page = 1) {
-      this.isLoading = true
+    async fetchProducts(category) {
+      console.log(typeof category)
+      this.isLoading = true;
 
-      // 发送 API 请求，获取指定分类和页码的数据
-      const response = await this.$http.get(
-        `products?category=${category}&page=${page}`
-      )
+      // 发送 API 请求，获取指定分类的数据
+      const response = await this.$http.get(`products?category=${category}`);
+      const fetchedProducts = response.data;
 
       // 获取到的产品数据
-      const fetchedProducts = response.data
-      console.log(fetchedProducts,page)
-      
-      // 如果获取的数据为空，表示没有更多数据，停止加载
-      if (fetchedProducts.length === 0) {
-        this.noMoreData = true
-      } else {
-        // 如果是第一页，替换当前产品列表
-        if (page === 1) {
-          this.products = fetchedProducts
-        } else {
-          // 如果是加载更多，追加数据
-          this.products = this.products.concat(fetchedProducts);
-        }
-      }
-
-      this.isLoading = false
-    },
-
-    handleScroll() {
-      // 检查是否已经在加载或没有更多数据
-      if (this.isLoading || this.noMoreData) {
-        return
-      }
-
-      // 获取页面滚动信息
-      const scrollPosition = window.scrollY + window.innerHeight
-      const pageHeight = document.documentElement.scrollHeight
-
-      // 当滚动到页面底部时，加载下一页数据
-      if (scrollPosition >= pageHeight - 100) {
-        // 可以根据需要调整触发加载的距离
-        this.page++
-        this.fetchProducts(this.selectedCategory, this.page)
-      }
+      this.products = fetchedProducts;
+      this.isLoading = false;
     },
   },
-}
+};
 </script>
 
 <style scoped>
