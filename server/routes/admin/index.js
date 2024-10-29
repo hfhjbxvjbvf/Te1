@@ -6,8 +6,9 @@ module.exports = (app) => {
   const AdminUser = require('../../models/AdminUser');
   const sendEmail = require('../../plugins/sendEmail.js');
   const productRouter = require('./Product');
-  const Slideshow = require('../../models/Slideshow.js');
+  const Slideshow = require('./Slideshow.js');
   app.use('/admin/api/rest/products',productRouter);
+  app.use('/admin/api/rest/slideshows',Slideshow);
   const router = express.Router({
     mergeParams: true,
   });

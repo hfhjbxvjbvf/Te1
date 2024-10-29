@@ -15,9 +15,11 @@ const productSchema = new mongoose.Schema({
   category: {
      type: String 
     },
-  image: { 
+  image: [{
     type:String
-  } // 图片路径
+  }] 
+    
+   // 图片路径
 }, { timestamps: true });  // 自动生成创建和更新的时间戳
 
 module.exports = mongoose.model('Product', productSchema);

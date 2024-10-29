@@ -1,15 +1,11 @@
 <template>
   <div class="main-container">
     <!-- 走马灯 -->
-    <!-- <div class="carousel">
-      <div
-        v-for="(image, index) in carouselImages"
-        :key="index"
-        class="carousel-item"
-      >
-        <img :src="image" alt="carousel image" class="carousel-image" />
-      </div>
-    </div> -->
+    <el-carousel :interval="4000" type="card" height="300px">
+      <el-carousel-item v-for="(item, index) in slideshow" :key="index" class="carousel-item">
+        <img :src="item.image" alt="Slideshow image" class="carousel-image" />
+      </el-carousel-item>
+    </el-carousel>
 
     <!-- 分类导航栏 -->
     <div class="category-nav">
@@ -26,17 +22,9 @@
     <!-- 商品列表 -->
     <div class="main-content">
       <div class="product-list">
-        <div
-          v-for="product in products"
-          :key="product._id"
-          class="product-item"
-        >
+        <div v-for="product in products" :key="product._id" class="product-item">
           <router-link :to="`/goods/${product._id}`">
-            <img
-              :src="product.image"
-              alt="product image"
-              class="product-image"
-            />
+            <img :src="product.image" alt="product image" class="product-image" />
             <div class="product-info">
               <h2>{{ product.name }}</h2>
               <p>{{ product.description }}</p>
@@ -57,27 +45,43 @@ export default {
   data() {
     return {
       products: [], // 商品数据
+      slideshow: [], // 轮播图数据
       isLoading: false, // 加载状态
       currentCategory: 'CPU', // 当前分类
       categories: ['CPU', 'GPU', '苹果', '协处理器', '其他'], // 分类
     };
   },
-  mounted() {
-    this.fetchProducts(this.currentCategory);
-  },
+  
   methods: {
     async fetchProducts(category) {
-      console.log(typeof category)
       this.isLoading = true;
-
-      // 发送 API 请求，获取指定分类的数据
-      const response = await this.$http.get(`products?category=${category}`);
-      const fetchedProducts = response.data;
-
-      // 获取到的产品数据
-      this.products = fetchedProducts;
-      this.isLoading = false;
+      try {
+        const response = await this.$http.get(`products?category=${category}`);
+        this.products = response.data;
+      } catch (error) {
+        console.error('获取商品数据失败', error);
+      } finally {
+        this.isLoading = false;
+      }
     },
+    async fetchSlideshow() {
+      try {
+        const slideshowRes = await this.$http.get('slideshows');
+        this.slideshow = await Promise.all(
+          slideshowRes.data.map(async (item) => {
+            const res = await this.$http.get(`products/${item.productId}`);
+            return res.data;
+          })
+        );
+      } catch (error) {
+        console.error('获取轮播图数据失败', error);
+      }
+    },
+  },
+  
+  mounted() {
+    this.fetchProducts(this.currentCategory);
+    this.fetchSlideshow();
   },
 };
 </script>
@@ -89,24 +93,28 @@ export default {
   padding: 20px;
 }
 
-.carousel {
-  display: flex;
-  overflow: hidden;
-  width: 100%;
-  height: 300px;
-  margin-bottom: 20px;
+.carousel-container {
+  max-width: 600px;
+  margin: auto;
 }
 
 .carousel-item {
-  flex-shrink: 0;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .carousel-image {
-  width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n+1) {
+  background-color: #d3dce6;
 }
 
 .category-nav {

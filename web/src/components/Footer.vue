@@ -55,9 +55,9 @@
               </a>
             </p>
             <p>
-              本博客已运行{{ this.timeObj.day }}天{{ this.timeObj.hour }}时{{
+              <!-- 本博客已运行{{ this.timeObj.day }}天{{ this.timeObj.hour }}时{{
                 this.timeObj.minute
-              }}分{{ this.timeObj.second }}秒
+              }}分{{ this.timeObj.second }}秒 -->
             </p>
           </div>
         </div>
@@ -98,7 +98,7 @@ export default {
     }
   },
   created() {
-    this.getTime()
+    //this.getTime()
   },
   beforeDestroy() {
     clearInterval(this.intTime)
@@ -109,7 +109,8 @@ export default {
       this.model = res.data
     },
     async getTime() {
-      let res = await this.$http.get('/time')
+      let res = await this.$http.get('time')
+      console.log(res)
       this.currentTime = res.data.data
       this.timeCha = this.currentTime - this.startTime
       this.getCountTime(this.timeCha)

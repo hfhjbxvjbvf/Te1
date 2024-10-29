@@ -36,7 +36,8 @@ router.delete('/:id', async (req, res) => {
 // 获取所有产品
 router.get('/', async (req, res) => {
   try {
-    const category = req.query.category || '';
+    //空值似乎不能作为传递的值了，不会输出全部
+    const category = req.query.category || 'CPU';
     const products = await Product.find({category});
     res.send({ products });
   } catch (error) {
@@ -47,7 +48,10 @@ router.get('/', async (req, res) => {
 // 获取单个产品
 router.get('/:id', async (req, res) => {
   try {
-    const product = await req.Model.findById(req.params.id);
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).send({ message: '产品未找到' });
+    }
     res.send(product);
   } catch (error) {
     res.status(400).send({ message: '获取产品详情失败' });

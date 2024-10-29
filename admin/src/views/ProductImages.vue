@@ -66,7 +66,7 @@
     </el-table>
 
     <el-pagination
-      @current-change="fetchProducts"
+      @current-change="fetchSlideshowAndProducts"
       :current-page="currentPage"
       :page-size="pageSize"
       :total="totalProducts"
@@ -89,18 +89,32 @@ export default {
     }
   },
   methods: {
-    async fetchProducts() {
-      const res = await this.$http.get('rest/slideshow')
-      console.log(res)
-      this.products = res.data
-      console.log(this.products)
-      this.totalProducts = res.data.length
+    async fetchSlideshowAndProducts() {
+      try {
+        // 获取幻灯片数据
+        const slideshowRes = await this.$http.get('rest/slideshow')
+        console.log('请求返回:', slideshowRes)
+        // 假设获取的幻灯片数据中包含 productId
+        const productIds = slideshowRes.data.map((item) => item.productId) // 提取 productId
+        // 如果 productIds 有数据，则调用产品列表接口
+        let n = 0
+        while (n < productIds.length) {
+          const res = await this.$http.get(`rest/products/${productIds[n]}`)
+          n++
+          this.products.push(res.data)
+        }
+      } catch (error) {
+        console.error('获取数据失败', error)
+      }
     },
+
     async deleteProductImg(id) {
       try {
-        await this.$http.delete(`rest/slideshow/${id}`)
+        const response = await this.$http.delete(`rest/slideshow/${id}`)
+        console.log('删除响应:', response) // 打印删除结果
         this.$message.success('删除成功')
-        this.fetchProducts() // 刷新列表
+        this.products = []
+        this.fetchSlideshowAndProducts() // 刷新列表
       } catch (error) {
         this.$message.error('删除失败，请重试！')
         console.error('删除轮播图时发生错误:', error)
@@ -119,10 +133,7 @@ export default {
     async saveDateSelected() {
       try {
         console.log('准备发送请求')
-        const response = await this.$http.post(
-          '/admin/api/rest/slideshow',
-          this.products
-        )
+        const response = await this.$http.post('rest/slideshow', this.products)
         console.log('请求返回:', response)
         this.$message.success('保存成功')
       } catch (error) {
@@ -132,7 +143,7 @@ export default {
     },
   },
   created() {
-    this.fetchProducts()
+    this.fetchSlideshowAndProducts()
   },
 }
 </script>

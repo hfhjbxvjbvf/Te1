@@ -174,6 +174,7 @@ module.exports = app => {
   // 获取所有产品
   router.get('/products', async (req, res) => {
     try {
+      console.log('前台轮播图接口被访问');
       // 从请求查询参数中获取分类、页数和每页显示的条目数
       const category = req.query.category;
       const page = parseInt(req.query.page) || 1; // 默认为第一页
@@ -186,8 +187,7 @@ module.exports = app => {
       if (category) {
         query.category = category;
       }
-      console.log('Query:', query);
-      console.log('这是一个测试消息');
+      
       // 计算跳过的条目数
       const skip = (page - 1) * limit;
       console.log(skip)
@@ -201,29 +201,35 @@ module.exports = app => {
       res.status(400).send({ message: '获取产品失败' });
     }
   });
-  
+  //获取全部产品轮播图
+router.get('/slideshows', async (req, res) => {
+  try {
+    console.log('前台轮播图接口被访问');
+    console.log(req.query);
+    const slideshow = await Slideshow.find();
+    console.log('这是一个测试消息');
+    res.send(slideshow);
+  } catch (error) {
+    console.error(error);
+    res.status(400).send({ message: '获取轮播图失败' });
+  }
+});
   
 
-// 获取单个产品
+// 获取单个产品   拦截到很多产品了，所以api要注意的写
 router.get('/products/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).send({ message: '产品未找到' });
+    }
     res.send(product);
   } catch (error) {
     res.status(400).send({ message: '获取产品详情失败' });
   }
 });
 
-//获取全部产品轮播图
-router.get('/slideshow', async (req, res) => {
-  try {
-    const slideshow = await Slideshow.find();
-    
-    res.send(slideshow);
-  } catch (error) {
-    res.status(400).send({ message: '获取产品轮播图失败' });
-  }
-});
+
 
   // 留言
   router.post('/messages', async (req, res) => {
@@ -240,9 +246,7 @@ router.get('/slideshow', async (req, res) => {
   // 获取服务器时间
   router.get('/time', async (req, res) => {
     let time = new Date().getTime()
-    res.send({
-      'data': time
-    })
+    res.send(time)
   })
 
   app.use("/web/api", router);
