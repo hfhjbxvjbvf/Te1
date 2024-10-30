@@ -1,6 +1,6 @@
 module.exports = (app) => {
   const mongoose = require("mongoose");
-  const dbUri = "mongodb://144.48.241.81:27017/blog";
+  const dbUri = "mongodb://localhost:27017/blog";
 
   mongoose.connect(dbUri, {
     useNewUrlParser: true,
