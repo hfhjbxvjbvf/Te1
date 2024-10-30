@@ -4,6 +4,12 @@ module.exports = (app) => {
   const assert = require('http-assert');
   const jwt = require('jsonwebtoken');
   const AdminUser = require('../../models/AdminUser');
+  const Article = require('../../models/Article');
+  const Link = require('../../models/Link');
+  const Category = require('../../models/Category');
+  const Comment = require('../../models/Comment');
+  const Message = require('../../models/Message');
+  const User = require('../../models/User');
   const sendEmail = require('../../plugins/sendEmail.js');
   const productRouter = require('./Product');
   const Slideshow = require('./Slideshow.js');
