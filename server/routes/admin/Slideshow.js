@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   try {
     const slideshow = await Slideshow.create(req.body);
-    res.send(product);
+    res.send(slideshow);
   } catch (error) {
     res.status(400).send({ message: '创建轮播图失败' });
   }

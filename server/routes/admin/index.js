@@ -13,8 +13,8 @@ module.exports = (app) => {
   const sendEmail = require('../../plugins/sendEmail.js');
   const productRouter = require('./Product');
   const Slideshow = require('./Slideshow.js');
-  app.use('/admin/api/rest/products',productRouter);
-  app.use('/admin/api/rest/slideshows',Slideshow);
+  //app.use('/admin/api/rest/products',productRouter);
+  //app.use('/admin/api/rest/slideshows',Slideshow);
   const router = express.Router({
     mergeParams: true,
   });

@@ -9,29 +9,29 @@
 
 ### 项目开发
 
-#### 1. 克隆项目至本地：
+#### 1. 克隆项目至本地
 
 ```sh
-$ git clone git@github.com:hfhjbxvjbvf/Te1.git
-$ cd vue-blog
-$ pnpm i
+git clone git@github.com:hfhjbxvjbvf/Te1.git
+cd Te1
+pnpm i
 ```
 
-#### 2. 安装前后台(admin、web)及后端(server)项目依赖：
+#### 2. 安装前后台(admin、web)及后端(server)项目依赖
 
 ```sh
-$ pnpm install-all
+pnpm install-all
 ```
 
-#### 3. 运行前后台(admin、web)及后端(server)项目：
+#### 3. 运行前后台(admin、web)及后端(server)项目
 
 ```sh
-$ pnpm serve-all
+pnpm serve-all
 ```
 
-#### 4. 打开浏览器预览：
+#### 4. 打开浏览器预览
 
-http://localhost:8080 打开前台本地页面；http://localhost:8088 打开后台本地页面。
+<http://localhost:8080> 打开前台本地页面；<http://localhost:8088> 打开后台本地页面。
 
 第一次后台admin登陆时请先注册用户，登录后可以将注册按钮隐藏以防登录账户泄露。
 
@@ -126,4 +126,5 @@ http://localhost:8080 打开前台本地页面；http://localhost:8088 打开后
 - 整理代码，拆分出组件。让结构更清晰，代码量更少
 - 利用 typescript 重构整个项目
 - 想到有意思的功能也会慢慢加上，持续开发中...
+
 # Person

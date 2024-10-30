@@ -97,7 +97,7 @@ export default {
         console.log(res)
 
         // 处理返回的数据
-        this.products = res.data.products // 获取产品数组
+        this.products = res.data // 获取产品数组
       } catch (error) {
         console.error('获取产品失败', error) // 输出错误信息
       }
