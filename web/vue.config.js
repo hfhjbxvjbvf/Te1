@@ -4,7 +4,7 @@ const productionGzipExtensions = ['js', 'css']
 module.exports = {
   lintOnSave: false,
   outputDir: __dirname + '/../server/web',
-  publicPath: process.env.NODE_ENV === 'production' ? '/web' : '/',
+  //publicPath: process.env.NODE_ENV === 'production' ? '/web' : '/',
   productionSourceMap: false,
   chainWebpack: (config) => {
     //最小化代码
