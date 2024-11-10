@@ -14,9 +14,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false } // 若使用 HTTPS 则将其改d为 true
 }));
-app.use(cors(
-  { origin: 'http://144.48.241.81' 
-}))
+app.use(cors())
 app.use(express.json())
 app.use('/uploads', express.static(__dirname + '/uploads'))
 app.use('/', express.static(__dirname + '/web'))
