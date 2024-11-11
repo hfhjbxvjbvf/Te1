@@ -5,7 +5,7 @@ import Main from '../views/Main.vue'
 Vue.use(VueRouter)
 
 const routes = [{
-  mode: 'history',
+  // mode: 'history',
   path: '/',
   component: Main,
   children: [{
