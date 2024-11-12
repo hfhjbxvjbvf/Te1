@@ -115,7 +115,6 @@ export default {
   },
   created() {
     this.fetchProduct(this.$route.params.id);
-    console.log(this.$route.params.id);
   },
 }
 </script>
