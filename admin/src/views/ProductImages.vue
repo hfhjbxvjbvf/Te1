@@ -93,7 +93,7 @@ export default {
       try {
   // 获取幻灯片数据
   const slideshowRes = await this.$http.get('/slideshows')
-  console.log('请求返回:', slideshowRes.data.slideshow)
+  // console.log('请求返回:', slideshowRes.data.slideshow)
   const slideshowArray = slideshowRes.data.slideshow
 
   // 提取 productId 列表
@@ -115,8 +115,7 @@ export default {
     
     // 将修改后的产品信息加入 products 数组
     this.products.push(productWithSlideshowId)
-    console.log('当前产品:', productWithSlideshowId)
-
+    // console.log('当前产品:', productWithSlideshowId)
     n++
   }
 } catch (error) {
@@ -128,8 +127,7 @@ export default {
     async deleteProductImg(id) {
       try {
         console.log('准备删除:', id)
-        const response = await this.$http.delete(`/slideshows/${id}`);
-        console.log('删除响应:', response) // 打印删除结果
+        await this.$http.delete(`/slideshows/${id}`);
         this.$message.success('删除成功')
         this.products = []
         this.fetchSlideshowAndProducts() // 刷新列表
@@ -150,9 +148,8 @@ export default {
     },
     async saveDateSelected() {
       try {
-        console.log('准备发送请求')
-        const response = await this.$http.post('/slideshows', this.products)
-        console.log('请求返回:', response)
+        // console.log('准备发送请求')
+        await this.$http.post('/slideshows', this.products)
         this.$message.success('保存成功')
       } catch (error) {
         this.$message.error('保存失败，请重试！')

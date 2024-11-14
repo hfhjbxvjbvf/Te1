@@ -1,4 +1,4 @@
-<template >
+<template>
   <div class="mb-9">
     <div class="mb-7">
       <div class="bgImg d-flex jc-center" id="header">
@@ -29,17 +29,13 @@
               {{ article.title }}
             </router-link>
             <div class="d-flex mt-4 p-7 text-grey-1">
-              <i class="iconfont icon-riqi2 pr-2"></i>
-              <span class="fs-sm">
-                {{ article.createdAt | date('YYYY-MM-DD') }}
-              </span>
               <i class="iconfont icon-sort pl-9"></i>
               <router-link
                 tag="span"
                 :to="`/tags`"
                 class="fs-sm pl-2 mr-6 hand"
               >
-                article.categories[0].name
+                {{ article.categories[0].name }}
               </router-link>
               <i class="iconfont icon-love text-red hand"></i>
             </div>
@@ -154,7 +150,6 @@ export default {
 
 <style lang="scss" scoped>
 .bgImg {
-  //background-image: url(https://miqilin-blog.oss-cn-shenzhen.aliyuncs.com/bg-blog.png);
   width: 100%;
   height: 100vh;
   background-position: center;

@@ -4,20 +4,20 @@
       <div class="d-flex py-6 jc-center">
         <div class="px-7 hand">
           <a
-            href="#"
+            href="https://shop174452331.taobao.com/?spm=a230r.7195193.1997079397.1.26ad548bQecmRP"
             target="_blank"
             class="text-grey-1"
           >
-            链接1
+            淘宝店铺
           </a>
         </div>
         <div class="px-7 hand">
           <a
-            href="#"
+            href="https://space.bilibili.com/1862917461?spm_id_from=333.999.0.0"
             target="_blank"
             class="text-grey-1"
           >
-            链接2
+            哔哩哔哩账户
           </a>
         </div>
         <div class="px-7 hand">

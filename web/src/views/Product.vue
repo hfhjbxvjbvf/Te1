@@ -3,7 +3,7 @@
     <!-- 走马灯 -->
     <el-carousel :interval="4000" type="card" height="300px">
       <el-carousel-item v-for="(item, index) in slideshow" :key="index" class="carousel-item">
-        <img :src="item.image" alt="Slideshow image" class="carousel-image" />
+        <img :src="item.image[0]" alt="Slideshow image" class="carousel-image" />
       </el-carousel-item>
     </el-carousel>
 
