@@ -39,7 +39,7 @@
         <el-table-column prop="image" label="商品图片" width="180">
           <template slot-scope="scope">
             <img
-              :src="scope.row.image"
+              :src="scope.row.image[0]"
               alt="商品图片"
               style="width: 50px; height: 50px"
             />
@@ -89,14 +89,13 @@ export default {
   methods: {
     async fetchProducts(category = null) {
       try {
-        console.log('测试前')
         // 发送请求，获取指定分类的数据
         const res = await this.$http.get('/products',{ params: { category:category } })
-        console.log('测试后')
         console.log(res)
 
         // 处理返回的数据
         this.products = res.data.products // 获取产品数组
+        console.log(this.products[0].image[0])
       } catch (error) {
         console.error('获取产品失败', error) // 输出错误信息
       }

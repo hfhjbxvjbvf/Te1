@@ -13,7 +13,7 @@ router.post(
   async (req, res) => {
     const file = req.file;
     file.url = `${BASE_URL}/uploads/${file.filename}`;
-    console.log("wenj",file);
+    console.log(file);
     res.send(file);
   }
 );

@@ -23,12 +23,27 @@
           class="avatar-uploader"
           :action="uploadUrl"
           :headers="getAuthHeaders()"
-          :show-file-list="false"
-          :on-success="(res) => $set(product, 'image', res.url)"
+          :show-file-list="true"
+          :multiple="true"
+          :on-success="handleImageUpload"
+          :limit="5"
         >
-          <img v-if="product.image" :src="product.image" class="avatar" />
+          <div
+            v-if="product.image && product.image.length"
+            class="image-preview"
+          >
+            <img
+              v-for="(img, index) in product.image"
+              :key="index"
+              :src="img"
+              class="avatar-preview"
+            />
+          </div>
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
+      </el-form-item>
+      <el-form-item label="商品连接">
+        <el-input v-model="product.url"></el-input>
       </el-form-item>
       <el-form-item label="商品描述">
         <mavon-editor
@@ -40,7 +55,9 @@
         ></mavon-editor>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" native-type="submit" @click="saveProduct">保存</el-button>
+        <el-button type="primary" native-type="submit" @click="saveProduct">
+          保存
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -63,9 +80,10 @@ export default {
       product: {
         name: '',
         price: 0,
-        image: '',
+        image: [], // 初始化为数组，支持多个图片
         description: '',
         category: '', // 初始化为字符串
+        url: '',
       },
       fixedCategories: ['CPU', 'GPU', '苹果', '协处理器', '其他'], // 固定的分类
     }
@@ -74,47 +92,56 @@ export default {
     async saveProduct() {
       try {
         if (this.id) {
-          await this.$http.put(`/products/${this.id}`, this.product);
+          await this.$http.put(`/products/${this.id}`, this.product)
         } else {
-          await this.$http.post('/products', this.product);
+          await this.$http.post('/products', this.product)
         }
 
         // 提示保存成功
         this.$message({
           type: 'success',
           message: '保存成功',
-        });
+        })
 
         // 可以在成功后跳转到产品列表
         //this.$router.push('/products/list');
-
       } catch (error) {
         // 在请求失败时提示错误信息
         this.$message({
           type: 'error',
           message: '保存失败，请重试！', // 可以根据具体错误更新信息
-        });
+        })
 
         // 如果需要，可以在这里输出错误的详细信息，方便调试
-        console.error('保存产品时发生错误:', error);
+        console.error('保存产品时发生错误:', error)
       }
     },
     async fetchProduct(id) {
       if (id) {
-        const res = await this.$http.get(`/products/${id}`);
-        this.product = res.data;
+        const res = await this.$http.get(`/products/${id}`)
+        this.product = res.data
+      }
+    },
+    // 上传图片成功后的处理函数
+    handleImageUpload(response, file, fileList) {
+      console.log(file.response) // 检查返回的数据结构
+      if (file.response && file.response.url) {
+        this.product.image = fileList.map((file) => file.response.url)
+      } else {
+        console.error('上传返回的响应数据不包含 url 属性')
       }
     },
     $imgAdd(pos, $file) {
-      const formData = new FormData();
-      formData.append('file', $file);
+      const formData = new FormData()
+      formData.append('file', $file)
       this.$http.post('/upload', formData).then((res) => {
-        this.$refs.mavon.$img2Url(pos, res.data.url);
-      });
+        this.$refs.mavon.$img2Url(pos, res.data.url)
+      })
     },
   },
   created() {
-    this.fetchProduct(this.$route.params.id);
+    this.fetchProduct(this.$route.params.id)
+    console.log(this.$route.params.id)
   },
 }
 </script>
@@ -129,5 +156,15 @@ export default {
   height: 100px;
   display: block;
   border-radius: 50%;
+}
+.avatar-preview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
 }
 </style>

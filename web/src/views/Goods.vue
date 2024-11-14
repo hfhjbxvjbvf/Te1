@@ -4,7 +4,7 @@
       <!-- 左侧商品图片区域，移除了轮播图，替换为单张图片 -->
       <div class="product-image-container">
         <el-image
-          :src="product.image"
+          :src="product.image[0]"
           fit="cover"
           class="product-image"
           @click="showZoomImage"
@@ -28,8 +28,10 @@
 
     <!-- 商品详细信息 -->
     <div class="product-extra-info">
-      <h2>Product Details</h2>
-      <p>{{ product.details }}</p>
+      <!-- <h2>Product Details</h2>
+      <p>{{ product.details }}</p> -->
+      <h2>商品功能暂且未开放完全</h2>
+      <h2>请点击链接，进淘宝店铺了解详细：{{ product.url }}</h2>
     </div>
 
     <!-- 图片放大功能 -->
@@ -47,9 +49,10 @@ export default {
       product: {
         title: "",
         price: 0,
-        image: "",
+        image:[],
         description: "",
         details: "",
+        url: "",
       },
       zoomDialogVisible: false,
     };
@@ -58,6 +61,7 @@ export default {
     async getData() {
       const id = this.$route.params.id;
       const res = await this.$http.get(`products/${id}`);
+      console.log(res.data);
       this.product = res.data;
     },
     addToCart() {

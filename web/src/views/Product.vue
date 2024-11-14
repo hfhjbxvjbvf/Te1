@@ -24,7 +24,7 @@
       <div class="product-list">
         <div v-for="product in products" :key="product._id" class="product-item">
           <router-link :to="`/goods/${product._id}`">
-            <img :src="product.image" alt="product image" class="product-image" />
+            <img :src="product.image[0]" alt="product image" class="product-image" />
             <div class="product-info">
               <h2>{{ product.name }}</h2>
               <p>{{ product.description }}</p>

@@ -50,7 +50,7 @@
       <el-table-column prop="image" label="商品图片" width="180">
         <template slot-scope="scope">
           <img
-            :src="scope.row.image"
+            :src="scope.row.image[0]"
             alt="商品图片"
             style="width: 50px; height: 50px"
           />
