@@ -131,6 +131,7 @@ export default {
         console.error('上传返回的响应数据不包含 url 属性')
       }
     },
+    //富文本图片上传
     $imgAdd(pos, $file) {
       const formData = new FormData()
       formData.append('file', $file)
