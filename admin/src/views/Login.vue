@@ -15,7 +15,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="login">登录</el-button>
-            <!-- <el-button type="danger" @click="register">注册</el-button> -->
+            <el-button type="danger" @click="register">注册</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -32,24 +32,40 @@ export default {
   },
   methods: {
     async login() {
-      const res = await this.$http.post('/login', this.model)
-      localStorage.setItem('token', res.data.token)
-      localStorage.setItem('username', res.data.username)
-      this.$message({
-        type: 'success',
-        message: '登录成功',
-      })
-      this.$router.push('/')
+      try {
+        const res = await this.$http.post('/login', this.model)
+        localStorage.setItem('token', res.data.token)
+        localStorage.setItem('username', res.data.username)
+        this.$message({
+          type: 'success',
+          message: '登录成功',
+        })
+        this.$router.push('/')
+      } catch (error) {
+        this.$message({
+          type: 'error',
+          message:
+            '登录失败，请检查用户名或密码',
+        })
+      }
     },
     async register() {
-      const res = await this.$http.post('/login/register', this.model)
-      localStorage.setItem('token', res.data.token)
-      localStorage.setItem('username', res.data.username)
-      this.$message({
-        type: 'success',
-        message: '注册成功',
-      })
-      this.$router.push('/login')
+      try {
+        const res = await this.$http.post('/login/register', this.model)
+        localStorage.setItem('token', res.data.token)
+        localStorage.setItem('username', res.data.username)
+        this.$message({
+          type: 'success',
+          message: '注册成功',
+        })
+        this.$router.push('/login')
+      } catch (error) {
+        this.$message({
+          type: 'error',
+          message:
+            '注册失败，请重试',
+        })
+      }
     },
   },
 }
