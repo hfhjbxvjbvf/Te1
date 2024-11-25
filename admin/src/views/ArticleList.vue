@@ -79,9 +79,7 @@ export default {
     },
   },
   created() {
-    console.log("输出")
     this.fetch()
-    console.log("输出")
   },
 }
 </script>

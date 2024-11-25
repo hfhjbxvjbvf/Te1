@@ -51,7 +51,7 @@ export default {
       isDarkTheme: false, // 新增的深色主题状态
       items: [
         { text: '首页', link: '/' },
-        { text: 'Dieshot', link: '/tags' },
+        { text: 'Dieshot', link: '/dieshot' },
         { text: '产品', link: '/product' },
         { text: '留言', link: '/message' },
         { text: '关于', link: '/about' },

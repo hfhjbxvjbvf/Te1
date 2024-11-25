@@ -11,7 +11,7 @@ const routes = [{
   children: [{
       path: '/',
       name: 'Home',
-      component: () => import( /* webpackChunkName: "home" */ '../views/Home.vue'),
+      component: () => import( '../views/Home.vue'),
       meta: {
         title: '首页 - QuWei'
       }
@@ -19,23 +19,23 @@ const routes = [{
     {
       path: '/archives',
       name: 'Archive',
-      component: () => import( /* webpackChunkName: "archive" */ '../views/Archive.vue'),
+      component: () => import('../views/Archive.vue'),
       meta: {
         title: '归档 - QuWei'
       }
     },
     {
-      path: '/tags',
-      name: 'Tag',
-      component: () => import( /* webpackChunkName: "tag" */ '../views/Tag.vue'),
+      path: '/dieshot',
+      name: 'dieshot',
+      component: () => import('../views/Dieshot.vue'),
       meta: {
-        title: '标签 - QuWei'
+        title: 'dieshot - QuWei'
       }
     },
     {
       path: '/links',
       name: 'Link',
-      component: () => import( /* webpackChunkName: "link" */ '../views/Link.vue'),
+      component: () => import('../views/Link.vue'),
       meta: {
         title: '友链 - QuWei'
       }
@@ -43,7 +43,7 @@ const routes = [{
     {
       path: '/message',
       name: 'Message',
-      component: () => import( /* webpackChunkName: "message" */ '../views/Message.vue'),
+      component: () => import('../views/Message.vue'),
       meta: {
         title: '留言 - QuWei'
       }

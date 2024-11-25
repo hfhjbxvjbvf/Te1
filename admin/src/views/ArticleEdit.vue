@@ -3,12 +3,12 @@
     <h1>{{ id ? '编辑' : '新建' }}文章</h1>
     <el-form label-width="120px" @submit.native.prevent="save">
       <el-form-item label="所属分类">
-        <el-select v-model="model.categories" multiple>
+        <el-select v-model="model.categories">
           <el-option
-            v-for="item in categories"
-            :key="item._id"
-            :label="item.name"
-            :value="item._id"
+            v-for="(item,index) in categories"
+            :key="index"
+            :label="item"
+            :value="item"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -28,15 +28,13 @@
         </el-upload>
       </el-form-item>
       <el-form-item label="详情">
-        <div>
-          <mavon-editor
-            code_style="monokai-sublime"
-            :ishljs="true"
-            ref="mavon"
-            v-model="model.body"
-            @imgAdd="$imgAdd"
-          ></mavon-editor>
-        </div>
+        <mavon-editor
+          code_style="monokai-sublime"
+          :ishljs="true"
+          ref="mavon"
+          v-model="model.body"
+          @imgAdd="$imgAdd"
+        ></mavon-editor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button>
@@ -48,49 +46,71 @@
 <script>
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+
 export default {
-  name: 'Create',
+  name: 'ArticleForm',
   components: {
     mavonEditor,
   },
   props: {
-    id: {},
+    id: {}, // 通过路由传递的文章ID
   },
   data() {
     return {
-      model: {},
-      categories: [],
-      body: '',
+      model: {
+        title: '',
+        categories:'', // 用于存储选择的分类
+        icon: '',
+        body: '', // 文章内容
+      },
+      categories: [ "CPU", "GPU", "协处理器", "其他"], // 文章分类列表
     }
   },
   methods: {
     async save() {
-      if (this.id) {
-        await this.$http.put(`/articles/${this.id}`, this.model)
-      } else {
-        await this.$http.post('/articles', this.model)
+      console.log(this.model)
+      try {
+        // 根据是否有ID来决定是创建还是编辑
+        if (this.id) {
+          await this.$http.put(`/articles/${this.id}`, this.model)
+        } else {
+          await this.$http.post('/articles', this.model)
+        }
+        
+        // 成功保存后跳转到文章列表
+        this.$router.push('/articles/list')
+        this.$message({
+          type: 'success',
+          message: '保存成功',
+        })
+      } catch (error) {
+        // 请求失败时提示错误
+        this.$message({
+          type: 'error',
+          message: '保存失败，请重试！',
+        })
+        console.error('保存文章时发生错误:', error)
       }
-      this.$router.push('/articles/list')
-      this.$message({
-        type: 'success',
-        message: '保存成功',
-      })
     },
+    // 获取文章数据
     async fetch() {
-      const res = await this.$http.get(`/articles/${this.id}`)
-      this.model = res.data
+      try {
+        const res = await this.$http.get(`/articles/${this.id}`)
+        this.model = res.data
+      } catch (error) {
+        console.error('获取文章数据失败:', error)
+      }
     },
+    // 获取文章分类数据
     async fetchCategories() {
-      const res = await this.$http.get('/categories')
-      this.categories = res.data
+      try {
+        const res = await this.$http.get('/categories')
+        this.categories = res.data
+      } catch (error) {
+        console.error('获取分类数据失败:', error)
+      }
     },
-    // async handleImageAdded(file, Editor, cursorLocation, resetUploader) {
-    //   const formData = new FormData();
-    //   formData.append("file", file);
-    //   const res = await this.$http.post("upload", formData);
-    //   Editor.insertEmbed(cursorLocation, "image", res.data.url);
-    //   resetUploader();
-    // }
+    // 处理富文本编辑器中的图片上传
     $imgAdd(pos, $file) {
       const formData = new FormData()
       formData.append('file', $file)
@@ -100,8 +120,23 @@ export default {
     },
   },
   created() {
-    this.fetchCategories()
-    this.id && this.fetch()
+    // this.fetchCategories() // 获取分类数据
+    if (this.id) {
+      this.fetch() // 编辑时，获取当前文章数据
+    }
   },
 }
 </script>
+
+<style scoped>
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+}
+.avatar {
+  width: 100px;
+  height: 100px;
+  display: block;
+  border-radius: 50%;
+}
+</style>
