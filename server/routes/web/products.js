@@ -5,7 +5,9 @@ const Product = mongoose.model("Product");
 
 // 获取所有产品
 router.get('/', async (req, res) => {
-  const { category, page = 1, limit = 20 } = req.query;
+  let { category, page = 1, limit = 20 } = req.query;
+  page = parseInt(page, 10);
+  limit = parseInt(limit, 10);
   const skip = (page - 1) * limit;
   let query = category ? { category } : {};
   const products = await Product.find(query).skip(skip).limit(limit);

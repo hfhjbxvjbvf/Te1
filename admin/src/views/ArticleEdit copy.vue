@@ -64,7 +64,7 @@ export default {
         body: "",
         icon: "",
       },
-      categories: ["热门", "CPU", "GPU", "协处理器", "其他"],
+      categories: ["CPU", "GPU","苹果", "协处理器", "其他"],
     };
   },
   methods: {

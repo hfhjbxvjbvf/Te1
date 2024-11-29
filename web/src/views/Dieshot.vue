@@ -4,7 +4,7 @@ export default {
     return {
       isCollapse: true,
       isCollapseText: '展开',
-      category: ['CPU', 'GPU', '协处理器', '其他'],
+      category: ['CPU', 'GPU', '苹果','协处理器', '其他'],
       currentCategory: '', // 用于记录当前选中的类别
       data:[],
     }
@@ -37,6 +37,7 @@ export default {
 </script>
 
 <template>
+  <div id="box">
   <div style="margin-top: 70px">
     <el-row class="tac" :gutter="20">
       <el-col :span="4">
@@ -60,19 +61,16 @@ export default {
           :sm="8"
           :md="6"
           :lg="5"
-          :xl="1"
           v-for="(item, index) in data"
           :key="index"
         >
-          <el-card :body-style="{ padding: '0px' }">
-            <img
-              :src="item.icon"
-              class="image"
-            />
-            <div style="padding: 14px">
-              <span>{{ item.title }}</span>
-            </div>
-          </el-card>
+          <el-card class="card-view">
+                  <div class="box-img">
+                    <img :src="item.icon" class="image" />
+                  </div>
+                    <div class="title">{{ item.title }}</div>
+
+                </el-card>
         </el-col>
       </el-col>
       <el-col :span="20" v-else>
@@ -82,9 +80,14 @@ export default {
       </el-col>
     </el-row>
   </div>
+</div>
 </template>
 
 <style lang="scss" scoped>
+#box{
+  margin: 0 auto;
+  max-width: 90%;
+}
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 180px;
   height: 100%;
@@ -96,24 +99,34 @@ export default {
   position: absolute;
   right: 0px;
 }
-.time {
-  font-size: 13px;
-  color: #999;
+.card-view {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0px;
+  height: 300px; /* 控制卡片的总高度 */
+  cursor: pointer; /* 鼠标变为手型 */
 }
 
-.bottom {
-  margin-top: 13px;
-  line-height: 12px;
-}
-
-.button {
-  padding: 0;
-  float: right;
+.box-img {
+  flex: 1; /* 使图片占据卡片的剩余空间 */
+  display: flex;
+  justify-content: flex-start; /* 使图片在上方 */
+  align-items: center; /* 图片垂直居中 */
 }
 
 .image {
-  width: 100%;
-  display: block;
+  width: 235px;
+  height: 200px; /* 确保所有图片的高度一致 */
+  object-fit: cover; /* 确保图片在宽高比不一致时裁剪 */
+}
+.title{
+  text-align: center;
+  margin-top:10px ;
+}
+
+.card-view > div {
+  padding: 14px;
+  flex-shrink: 0; /* 确保文字部分不压缩 */
 }
 
 .clearfix:before,
@@ -125,4 +138,5 @@ export default {
 .clearfix:after {
   clear: both;
 }
+
 </style>
