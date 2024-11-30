@@ -15,7 +15,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="login">登录</el-button>
-            <!-- <el-button type="danger" @click="register">注册</el-button> -->
+            <el-button type="danger" @click="register">注册</el-button>
           </el-form-item>
         </el-form>
       </el-card>
