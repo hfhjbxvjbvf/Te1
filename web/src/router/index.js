@@ -33,6 +33,14 @@ const routes = [{
       }
     },
     {
+      path: '/dieshot/:id',
+      name: 'dieshotDetail',
+      component: () => import('../views/DieshotDetail.vue'),
+      meta: {
+        title: 'dieshot详细 - QuWei'
+      }
+    },
+    {
       path: '/links',
       name: 'Link',
       component: () => import('../views/Link.vue'),
