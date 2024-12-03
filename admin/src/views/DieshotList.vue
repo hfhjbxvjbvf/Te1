@@ -1,11 +1,6 @@
 <template>
   <div>
-    <m-top-handle
-      title="标题"
-      content="写博客"
-      path="/articles/create/"
-    ></m-top-handle>
-    <h1>文章列表</h1>
+    <h1>dieshot列表</h1>
     <el-table :data="items">
       <el-table-column prop="_id" label="ID" width="250"></el-table-column>
       <el-table-column prop="title" label="文章标题"></el-table-column>
