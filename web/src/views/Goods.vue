@@ -59,7 +59,8 @@ export default {
             v-model="num"
             :min="1"
             :max="10"
-            label="描述文字"
+            label="商品数量"
+            disabled="true"
           ></el-input-number>
           <br />
 

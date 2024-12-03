@@ -91,8 +91,8 @@ export default {
   methods: {
     async saveProduct() {
       try {
-        if (this.id) {
-          await this.$http.put(`/products/${this.id}`, this.product)
+        if (this.product._id) {
+          await this.$http.put(`/products/${this.product._id}`, this.product)
         } else {
           await this.$http.post('/products', this.product)
         }
@@ -104,7 +104,7 @@ export default {
         })
 
         // 可以在成功后跳转到产品列表
-        //this.$router.push('/products/list');
+        this.$router.push('/products/list');
       } catch (error) {
         // 在请求失败时提示错误信息
         this.$message({

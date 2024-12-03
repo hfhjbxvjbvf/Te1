@@ -7,15 +7,20 @@
             <i class="el-icon-message"></i>
             内容管理
           </template>
-          <el-menu-item-group>
+          <!-- <el-menu-item-group>
             <template slot="title">分类</template>
             <el-menu-item index="/categories/create">新建分类</el-menu-item>
             <el-menu-item index="/categories/list">分类列表</el-menu-item>
+          </el-menu-item-group> -->
+          <el-menu-item-group>
+            <template slot="title">新闻</template>
+            <el-menu-item index="/news/create">新建新闻</el-menu-item>
+            <el-menu-item index="/news/list">新闻列表</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
             <template slot="title">Dieshot</template>
-            <el-menu-item index="/articles/create">新建Dieshot</el-menu-item>
-            <el-menu-item index="/articles/list">Dieshot列表</el-menu-item>
+            <el-menu-item index="/dieshot/create">新建Dieshot</el-menu-item>
+            <el-menu-item index="/dieshot/list">Dieshot列表</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
             <template slot="title">文章评论</template>

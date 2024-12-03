@@ -21,8 +21,8 @@ export default {
       } catch (error) {}
     },
   },
-  async mounted() {
-    await this.getData()
+   mounted() {
+    this.getData()
   },
 }
 </script>
@@ -36,6 +36,7 @@ export default {
       <div class="description">
         <h2>{{ data.title }}</h2>
         <p>
+          介绍:<br>
           {{ data.body }}
         </p>
       </div>
@@ -118,6 +119,7 @@ p {
 }
 
 .large-image {
+  margin: auto;
   width: 200%;
   border-radius: 8px;
 }

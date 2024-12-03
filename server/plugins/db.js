@@ -1,6 +1,7 @@
 module.exports = (app) => {
   const mongoose = require("mongoose");
-  const dbUri = "mongodb://localhost:27019/blog";
+  //const dbUri = "mongodb://localhost:27017/blog"; //本机运行数据库
+  const dbUri = "mongodb://blog:PxLHHb7ZjrMrEJZP@localhost:27019/blog"; //服务器上的数据库
 
   mongoose.connect(dbUri, {
     useNewUrlParser: true,

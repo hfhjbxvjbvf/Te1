@@ -17,31 +17,45 @@ const router = new VueRouter({
       path: "/",
       name: "main",
       component: () => import('../views/Main.vue'),
-      children: [{
-          path: "/categories/create",
-          component: () => import('../views/CategoryEdit.vue'),
+      children: [
+        // {
+        //   path: "/categories/create",     
+        //   component: () => import('../views/CategoryEdit.vue'),
+        // },
+        // {
+        //   path: "/categories/edit/:id",
+        //   component: () => import('../views/CategoryEdit.vue'),
+        //   props: true
+        // },
+        // {
+        //   path: "/categories/list",
+        //   component: () => import('../views/CategoryList.vue'),
+        // },
+        {
+          path: "/news/create",     
+          component: () => import('../views/NewEdit.vue'),
         },
         {
-          path: "/categories/edit/:id",
-          component: () => import('../views/CategoryEdit.vue'),
+          path: "/news/edit/:id",
+          component: () => import('../views/NewEdit.vue'),
           props: true
         },
         {
-          path: "/categories/list",
-          component: () => import('../views/CategoryList.vue'),
+          path: "/news/list",
+          component: () => import('../views/NewList.vue'),
         },
         {
-          path: "/articles/create",
-          component: () => import('../views/ArticleEdit.vue'),
+          path: "/dieshot/create",
+          component: () => import('../views/DieshotEdit.vue'),
         },
         {
-          path: "/articles/edit/:id",
-          component: () => import('../views/ArticleEdit.vue'),
+          path: "/dieshot/edit/:id",
+          component: () => import('../views/DieshotEdit.vue'),
           props: true
         },
         {
-          path: "/articles/list",
-          component: () => import('../views/ArticleList.vue'),
+          path: "/dieshot/list",
+          component: () => import('../views/DieshotList.vue'),
         },
         {
           path: "/comments/list",

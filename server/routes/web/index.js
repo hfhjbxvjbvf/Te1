@@ -4,7 +4,7 @@ const router = express.Router();
 // 引入各模块接口
 const authRoutes = require('./auth');
 const usersRoutes = require('./users');
-const articlesRoutes = require('./articles');
+const dieshotRoutes = require('./dieshot');
 const tagsRoutes = require('./category');
 const productsRoutes = require('./products');
 const slideshowsRoutes = require('./slideshows');
@@ -13,7 +13,7 @@ const messagesRoutes = require('./messages');
 
 
 // 挂载各模块路由
-router.use('/articles', articlesRoutes);
+router.use('/dieshot', dieshotRoutes);
 router.use('/tags', tagsRoutes);
 router.use('/users', usersRoutes);  //用户
 router.use('/products', productsRoutes);    //商品

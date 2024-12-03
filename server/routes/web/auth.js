@@ -14,6 +14,8 @@ router.post('/register', async (req, res) => {
   try {
     const existingUser = await User.findOne({ email })
     const exitphoneUser = await User.findOne({ phone })
+    const existUserName = await User.findOne({ name })
+    if (existUserName) return res.status(409).json({ message: '用户名已存在' })
     if (existingUser) return res.status(400).json({ message: '邮箱已注册' })
     if (exitphoneUser) return res.status(401).json({ message: '手机号已注册' })
     const user = new User({ name, email, password, phone })
@@ -31,10 +33,10 @@ router.post('/login', async (req, res) => {
   try {
     const user = await User.findOne({ email })
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(400).json({ message: '邮箱或密码错误' })
+      return res.status(401).json({ message: '邮箱或密码错误' })
     }
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
-      expiresIn: '1h',
+      expiresIn: '7d',
     })
     res.json({ message: '登录成功', token })
   } catch (error) {

@@ -7,10 +7,10 @@ export default {
         password: '',
         phone: '',
         email: '',
+        rememberMe: false,//勾选协议
       },
       captcha: '',
       captchaUrl: `/auth/captcha?t=${Date.now()}`,
-      rememberMe: false,
       islogin: 2,
       isLoading:false,
       rules: {
@@ -50,8 +50,8 @@ export default {
             trigger: 'blur',
           },
         ],
-        agreement:[
-          {required: true, message: '请勾选协议', trigger: 'change'}
+        rememberMe:[
+          {required: true, message: '请勾选协议', trigger: 'blur'}
         ]
       },
     }
@@ -63,9 +63,8 @@ export default {
       await this.$refs.loginForm.validate( async(valid,fields)=>{
         console.log("文本",valid,"错误",fields)
         if(valid){
-          this.isLoading = true
-          await this.checkCode()
-          this.isLoading = false
+          if(! await this.checkCode())
+            return
       try {
         const res = await this.$http.post('/auth/login', {
           ...this.UserInfo,
@@ -77,7 +76,7 @@ export default {
       } catch (error) {
         console.error('登录失败', error)
         console.log(error.response.status)
-        if (error.response.status === 400) {
+        if (error.response.status === 401) {
           this.$message.error('用户名或密码错误')
         } else {
           this.$message.error('登录失败')
@@ -89,7 +88,8 @@ export default {
     },
     //注册
     async register() {
-      this.checkCode()
+      if(! await this.checkCode())
+          return
       await this.$http
         .post('/auth/register', this.UserInfo)
         .then((response) => {
@@ -117,7 +117,10 @@ export default {
               })
               break
             case 409:
-              alert('用户已存在')
+            this.$message({
+                message: '用户名重复',
+                type: 'warning',
+              })
               break
             default:
               alert('注册失败')
@@ -164,6 +167,8 @@ export default {
           type: 'success',
           message: '验证码校验成功',
         })
+        this.refreshCaptcha()
+        return true
       } catch (error) {
         console.error('验证码校验失败', error)
         this.$message({
@@ -171,6 +176,7 @@ export default {
           message: '验证码校验失败',
         })
         this.refreshCaptcha()
+        return false
       }
     },
 
@@ -244,8 +250,8 @@ export default {
         </el-form-item>
 
         <!-- 同意条款 -->
-        <el-form-item prop="argeement">
-          <el-checkbox v-model="rememberMe">
+        <el-form-item prop="rememberMe">
+          <el-checkbox v-model="UserInfo.rememberMe">
             已阅读并同意趣玩账号
             <a href="#" class="a-text" target="_blank">用户协议</a>
             和
@@ -354,8 +360,8 @@ export default {
           </el-row>
         </el-form-item>
         <!-- 同意条款 -->
-        <el-form-item prop="argeement">
-          <el-checkbox v-model="rememberMe">
+        <el-form-item prop="rememberMe">
+          <el-checkbox v-model="UserInfo.rememberMe">
             已阅读并同意趣玩账号
             <a href="#" class="a-text" target="_blank">用户协议</a>
             和

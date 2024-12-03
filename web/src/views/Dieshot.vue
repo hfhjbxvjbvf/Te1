@@ -19,7 +19,7 @@ export default {
     async getDate(category) {
       try {
         console.log(category)
-        const res = await this.$http.get(`/articles?category=${category}`)
+        const res = await this.$http.get(`/dieshot?category=${category}`)
 
         console.log(res.data) // 处理获取的数据
         this.data = res.data
