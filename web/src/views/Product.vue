@@ -29,7 +29,7 @@ export default {
   },
   async created() {
     // 加载数据
-    this.fetchSlideshow()
+    // this.fetchSlideshow()
     await this.loadCategoryData()
     console.log(this.categoryData)
   },
@@ -52,12 +52,13 @@ export default {
 
     // 加载商品数据
     async loadCategoryData() {
-      console.log(this.categoryData.length)
+      console.log('加载数据前', this.categoryData)
       for (let i = 0; i < this.categoryData.length; i++) {
         this.categoryData[i].productList = await this.getPromo(
           this.categoryData[i].name,
           this.categoryData[i].productList
         )
+        console.log('加载数据后', this.categoryData[i].productList)
       }
       console.log('商品', this.categoryData)
     },
@@ -84,11 +85,21 @@ export default {
 <template>
   <div class="home" id="home" name="home">
     <!-- 轮播图 -->
-    <el-carousel class="zoom-image" :interval="5000" arrow="always">
+    <el-carousel
+      class="zoom-image"
+      :interval="5000"
+      arrow="always"
+      v-if="carousel.length > 0"
+    >
       <el-carousel-item v-for="(item, index) in carousel[0].image" :key="index">
         <img :src="item" class="image" />
       </el-carousel-item>
     </el-carousel>
+    <el-empty
+      description="抱歉，暂时还没有该分类的图片"
+      style="text-align: center; margin-top: 100px"
+      v-else
+    ></el-empty>
     <!-- 轮播图END -->
 
     <div class="main-box">
@@ -100,11 +111,11 @@ export default {
           class="product-category"
         >
           <div class="box-title">
-            <div class="title">{{ category.name }}</div>
+            <div class="title">{{ category.name}}</div>
             <div class="more">更多商品></div>
           </div>
           <div class="box-bd">
-            <el-row :gutter="20" v-if="category.productList.length > 0">
+            <el-row :gutter="20" v-if="category.productList && category.productList.length > 0">
               <!-- :xs="12"
                 :sm="8"
                 :md="6"
@@ -119,14 +130,12 @@ export default {
                     <div class="box-img">
                       <img :src="item.image[0]" class="image" />
                     </div>
-                    <div class="title">{{item.name }}</div>
+                    <div class="title">{{ item.name }}</div>
                   </router-link>
                 </el-card>
               </el-col>
             </el-row>
-            <div style="text-align: center; margin-top: 100px" v-else>
-              抱歉，暂时还没有该分类的图片
-            </div>
+            <div v-else style="padding: 10px; font-weight: 800;font-size: large;">暂时该条目没有商品展示</div>
           </div>
         </div>
         <!-- 动态商品展示区域 END -->
@@ -193,7 +202,7 @@ export default {
   float: right;
 }
 .box-bd {
-  height: 625px;
+  max-height: 625px;
   display: block;
   z-index: 1000;
 }
@@ -223,9 +232,9 @@ export default {
   height: 200px; /* 确保所有图片的高度一致 */
   object-fit: cover; /* 确保图片在宽高比不一致时裁剪 */
   margin: 10px auto;
-  margin-top:0px ;
+  margin-top: 0px;
 }
-.title{
+.title {
   text-align: center;
 }
 
@@ -233,5 +242,4 @@ export default {
   padding: 14px;
   flex-shrink: 0; /* 确保文字部分不压缩 */
 }
-
 </style>

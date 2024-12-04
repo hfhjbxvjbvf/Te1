@@ -63,7 +63,7 @@ export default {
         icon: '',
         body: '', // 文章内容
       },
-      categories: [ "CPU", "GPU", "协处理器", "其他"], // 文章分类列表
+      categories: [ "CPU", "GPU", "苹果","协处理器", "其他"], // 文章分类列表
     }
   },
   methods: {

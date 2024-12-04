@@ -88,18 +88,27 @@ export default {
   },
   methods: {
     async fetchProducts(category = null) {
-      try {
-        // 发送请求，获取指定分类的数据
-        const res = await this.$http.get('/products',{ params: { category:category } })
-        console.log(res)
+  try {
+    const res = await this.$http.get('/products', { params: { category: category } });
+    console.log(res);
 
-        // 处理返回的数据
-        this.products = res.data.products // 获取产品数组
-        console.log(this.products[0].image[0])
-      } catch (error) {
-        console.error('获取产品失败', error) // 输出错误信息
+    // 处理返回的数据，确保数据格式正确
+    this.products = res.data.products || []; // 确保 products 是数组，即使没有返回数据
+    console.log(this.products);
+
+    // 确保每个产品项都有 image 属性，避免访问 undefined
+    this.products.forEach(product => {
+      if (!product.image) {
+        product.image = []; // 设置默认空数组，如果没有 image 属性
       }
-    },
+    });
+
+    // 检查第一个产品的图片
+    console.log(this.products[0].image[0]);
+  } catch (error) {
+    console.error('获取产品失败', error); // 输出错误信息
+  }
+},
     editProduct(id) {
       // 跳转到编辑页面
       this.$router.push(`/products/create/${id}`)
@@ -125,7 +134,7 @@ export default {
       }
     },
   },
-  created() {
+   created() {
     this.fetchProducts()
   },
 }
