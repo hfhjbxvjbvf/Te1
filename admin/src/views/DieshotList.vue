@@ -1,6 +1,18 @@
 <template>
   <div>
     <h1>dieshot列表</h1>
+    <el-form>
+      <el-form-item label="所属分类">
+        <el-cascader
+          v-model="categoriVules"
+          :options="categories"
+          @change="handleCategoryChange"
+        ></el-cascader>
+        <el-button type="primary" @click="fetch">筛选</el-button>
+      </el-form-item>
+    </el-form>
+    
+    
     <el-table :data="items">
       <el-table-column prop="_id" label="ID" width="250"></el-table-column>
       <el-table-column prop="title" label="文章标题"></el-table-column>
@@ -43,11 +55,59 @@ export default {
   data() {
     return {
       items: [],
+      categories: [
+        {
+          value: 'CPU',
+          label: 'CPU',
+          children: [
+            {
+              value: 'Intel',
+              label: 'Intel',
+            },
+            {
+              value: 'AMD',
+              label: 'AMD',
+            },
+          ],
+        },
+        {
+          value: 'GPU',
+          label: 'GPU',
+          children: [
+            {
+              value: 'Nvidia',
+              label: 'Nvidia',
+            },
+            {
+              value: 'Intel',
+              label: 'Intel',
+            },
+            {
+              value: 'AMD',
+              label: 'AMD',
+            },
+          ],
+        },
+        {
+          value: 'Apple',
+          label: 'Apple',
+        },
+        {
+          value: '协处理器',
+          label: '协处理器',
+        },
+        {
+          value: '其他',
+          label: '其他',
+        },
+      ], // 分类列表
+      categoriVules: [],
     }
   },
   methods: {
-    async fetch() {
-      const res = await this.$http.get('/articles')
+    //筛选
+    async fetch(){
+      const res = await this.$http.get('/articles',{params:{category:this.categoriVules}})
       console.log("输出",res)
       this.items = res.data
     },
@@ -72,6 +132,13 @@ export default {
           })
         })
     },
+     // 处理分类选择的变化，记录每个级别的选中值
+     handleCategoryChange(value) {
+      console.log('选择的分类值:', value)
+      this.categoriVules = value
+    },
+    
+    
   },
   created() {
     this.fetch()

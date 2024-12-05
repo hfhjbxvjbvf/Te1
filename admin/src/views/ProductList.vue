@@ -11,14 +11,15 @@
             :value="item"
           ></el-option>
         </el-select>
-      </el-form-item>
-      <el-button
+        <el-button
         type="primary"
         style="margin-left: 200px"
         @click="fetchProducts(category)"
       >
         搜索
       </el-button>
+      </el-form-item>
+
 
       <el-table :data="products" style="width: 100%">
         <el-table-column

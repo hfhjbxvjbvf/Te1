@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 
 const schema = new mongoose.Schema({
-  categories: {
+  categories: [{
     type: String,
-  },
+  }],
   title: {
     type: String
   },

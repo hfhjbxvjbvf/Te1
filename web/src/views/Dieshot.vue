@@ -3,58 +3,108 @@ export default {
   data() {
     return {
       isCollapse: true,
-      isCollapseText: '展开',
-      category: ['CPU', 'GPU', '苹果', '协处理器', '其他'],
-      currentCategory: '', // 用于记录当前选中的类别
+      isCollapseText: "展开",
+      categories: [
+        {
+          name: "CPU",
+          children: ["Intel", "AMD"],
+        },
+        {
+          name: "GPU",
+          children: ["Nvidia", "Intel", "AMD"],
+        },
+        {
+          name: "Apple",
+          children: [],
+        },
+        {
+          name: "协处理器",
+          children: [],
+        },
+        {
+          name: "其他",
+          children: [],
+        },
+      ],
+      currentCategory: "", // 当前选中的类别
+      currentSubCategory: "", // 当前选中的子类别
       data: [],
-    }
+    };
   },
   methods: {
-    Operation(category) {
-      this.currentCategory = category
-      console.log(category)
-      this.getDate(category)
+    // 处理菜单点击
+    handleMenuClick(parent, child) {
+      if (child) {
+        this.currentCategory = parent;
+        this.currentSubCategory = child;
+        this.Operation([parent, child]);
+      } else {
+        this.currentCategory = parent;
+        this.currentSubCategory = "";
+        this.Operation([parent]);
+      }
     },
-    // 获取数据的方法
+    // 获取数据
     async getDate(category) {
       try {
-        console.log(category)
-        const res = await this.$http.get(`/dieshot?category=${category}`)
-
-        console.log(res.data) // 处理获取的数据
-        this.data = res.data
-        console.log(this.data)
+        console.log(category);
+        const res = await this.$http.get('/dieshot', { params: { category: category } });
+        this.data = res.data;
+        console.log(this.data);
       } catch (error) {
-        console.error('获取数据失败', error)
+        console.error("获取数据失败", error);
       }
+    },
+    // 处理操作
+    Operation(category) {
+      this.getDate(category);
     },
   },
   mounted() {
-    // 初始时，获取CPU分类的数据
-    this.getDate(this.category[0])
+    // 加载默认数据
+    this.getDate(["CPU","Intel"]);
   },
-}
+};
 </script>
 
 <template>
   <div id="box">
     <div style="margin-top: 70px">
       <el-row class="tac" :gutter="20">
+        <!-- 左侧导航栏 -->
         <el-col :span="4">
+          <h5>dieshot导航栏</h5>
           <el-menu default-active="0" class="el-menu-vertical-demo">
-            <!-- 遍历category，绑定点击事件并传递当前分类 -->
-            <el-menu-item
-              v-for="(item, index) in category"
+            <el-submenu
+              v-for="(category, index) in categories"
               :key="index"
               :index="String(index)"
-              @click="Operation(item)"
             >
               <template slot="title">
-                <span>{{ item }}</span>
+                <span>{{ category.name }}</span>
               </template>
-            </el-menu-item>
+              <!-- 子选项 -->
+              <el-menu-item
+                v-for="(child, childIndex) in category.children"
+                :key="childIndex"
+                :index="`${index}-${childIndex}`"
+                @click="handleMenuClick(category.name, child)"
+              >
+                {{ child }}
+              </el-menu-item>
+              <!-- 如果没有子选项，父级可直接点击 -->
+              <el-menu-item
+                v-if="category.children.length === 0"
+                :index="`${index}-parent`"
+                @click="handleMenuClick(category.name)"
+              >
+                {{ category.name }}
+              </el-menu-item>
+            </el-submenu>
           </el-menu>
         </el-col>
+
+        <!-- 右侧内容 -->
         <el-col :span="20" v-if="data.length > 0">
           <el-col
             :xs="12"
@@ -89,23 +139,26 @@ export default {
   margin: 0 auto;
   max-width: 90%;
 }
+
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 180px;
   height: 100%;
 }
-#right-box {
-  width: 100px;
-  height: 100px;
-  background: #000;
-  position: absolute;
-  right: 0px;
+
+.el-menu-item {
+  white-space: nowrap; /* 防止溢出 */
 }
+
+.el-menu-item:hover {
+  background-color: #f5f5f5; /* 修改鼠标悬浮背景色 */
+}
+
 .card-view {
   display: flex;
   flex-direction: column;
   margin: 20px 0px;
   height: 300px; /* 控制卡片的总高度 */
-  cursor: pointer; /* 鼠标变为手型 */
+  cursor: pointer;
 }
 
 .box-img {
@@ -120,6 +173,7 @@ export default {
   height: 200px; /* 确保所有图片的高度一致 */
   object-fit: cover; /* 确保图片在宽高比不一致时裁剪 */
 }
+
 .title {
   text-align: center;
   margin-top: 10px;

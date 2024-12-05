@@ -3,14 +3,14 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Article = mongoose.model("Article");
 
-// 获取指定分类的文章
+// 获取指定分类的dieshot
 router.get('/', async (req, res) => {
-  const { category = "CPU", page = 1, limit = 20 } = req.query;
+  const { category=["CPU","Intel"], page = 1, limit = 20 } = req.query;
   const skip = (page - 1) * limit;
 
   try {
-    // 使用查询条件根据分类筛选文章
-    const dieshots = await Article.find({ categories: category })
+    // 使用查询条件根据分类筛选dieshot
+    const dieshots = await Article.find({ categories: {$all: category} })
                                   .skip(skip)
                                   .limit(Number(limit));
 
