@@ -7,8 +7,13 @@ const schema = new mongoose.Schema({
   title: {
     type: String
   },
-  icon: {
-    type: String
+  picture: {
+    picture_360p:{
+      type: String
+    },
+    picture_4K:{
+      type: String
+    }
   },
   body: {
     type: String

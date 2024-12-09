@@ -13,10 +13,12 @@ const messagesRoutes = require('./messages');
 const productsRoutes = require('./Product');
 const slideshowsRoutes = require('./Slideshow');
 const usersRoutes = require('./User');
+const NewsRoutes = require('./news');
 
 // 挂载各模块路由
 router.use('/login', loginRoutes);          // 登录
 router.use('/upload', uploadRoutes);        // 上传
+router.use('/news', NewsRoutes);
 router.use('/articles', articlesRoutes);    // 文章
 router.use('/categories', categoriesRoutes); // 分类
 router.use('/comments', commentsRoutes);    // 评论

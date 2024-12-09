@@ -117,7 +117,7 @@ export default {
             <el-card class="card-view">
               <router-link :to="`/dieshot/${item._id}`">
                 <div class="box-img">
-                  <img :src="item.icon" class="image" />
+                  <img :src="item.picture.picture_360p" class="image" />
                 </div>
                 <div class="title">{{ item.title }}</div>
               </router-link>
@@ -169,7 +169,7 @@ export default {
 }
 
 .image {
-  width: 235px;
+  width: 210px;
   height: 200px; /* 确保所有图片的高度一致 */
   object-fit: cover; /* 确保图片在宽高比不一致时裁剪 */
 }

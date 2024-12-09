@@ -27,14 +27,15 @@ require('./plugins/db')(app)
 const adminRoutes = require('./routes/admin/index');
 app.use('/admin/api', adminRoutes);
 
+
+const routerweb = require('./routes/web/index')
+app.use('/web/api', routerweb)
 // 错误处理函数
 app.use((err, req, res, next) => {
   res.status(err.statusCode || 500).send({
     message: err.message,
   });
 });
-const routerweb = require('./routes/web/index')
-app.use('/web/api', routerweb)
 
 app.listen(3000, async (req, res) => {
   console.log('http://localhost:3000')

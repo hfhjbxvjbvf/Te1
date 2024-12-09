@@ -17,10 +17,22 @@
           class="avatar-uploader"
           :action="uploadUrl"
           :headers="getAuthHeaders()"
-          :show-file-list="false"
-          :on-success="(res) => $set(model, 'icon', res.url)"
+          :show-file-list="true"
+          :on-success="(res) => $set(model.picture, 'picture_360p', res.url)"
         >
-          <img v-if="model.icon" :src="model.icon" class="avatar" />
+          <img v-if="model.picture.picture_360p" :src="model.picture.picture_360p" class="avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
+      <el-form-item label="高清图片上传">
+        <el-upload
+          class="avatar-uploader"
+          :action="uploadUrl"
+          :headers="getAuthHeaders()"
+          :show-file-list="true"
+          :on-success="(res) => $set(model.picture, 'picture_4K', res.url)"
+        >
+          <img v-if="model.picture.picture_4K" :src="model.picture.picture_4K" class="avatar" />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -57,7 +69,10 @@ export default {
       model: {
         title: '',
         categories: [], // 用于存储每一级别的分类数据
-        icon: '',
+        picture:{
+          picture_360p:'',
+          picture_4K:''
+        },
         body: '', // 文章内容
       },
       categories: [

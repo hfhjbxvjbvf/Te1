@@ -29,7 +29,7 @@ export default {
   },
   async created() {
     // 加载数据
-    // this.fetchSlideshow()
+    await this.fetchSlideshow()
     await this.loadCategoryData()
     console.log(this.categoryData)
   },
@@ -38,12 +38,19 @@ export default {
     async fetchSlideshow() {
       try {
         const slideshowRes = await this.$http.get('slideshows')
-        this.carousel = await Promise.all(
+        const data = await Promise.all(
           slideshowRes.data.map(async (item) => {
             const res = await this.$http.get(`products/${item.productId}`)
             return res.data
           })
         )
+        for(let i = 0; i < data.length; i++){
+          const res={
+            id:data[i]._id,
+            image:data[i].image[0],
+          }
+          this.carousel.push(res)
+        }
         console.log('轮播图', this.carousel)
       } catch (error) {
         console.error('获取轮播图数据失败', error)
@@ -52,15 +59,12 @@ export default {
 
     // 加载商品数据
     async loadCategoryData() {
-      console.log('加载数据前', this.categoryData)
       for (let i = 0; i < this.categoryData.length; i++) {
         this.categoryData[i].productList = await this.getPromo(
           this.categoryData[i].name,
           this.categoryData[i].productList
         )
-        console.log('加载数据后', this.categoryData[i].productList)
       }
-      console.log('商品', this.categoryData)
     },
 
     // 获取各类商品数据
@@ -91,15 +95,16 @@ export default {
       arrow="always"
       v-if="carousel.length > 0"
     >
-      <el-carousel-item v-for="(item, index) in carousel[0].image" :key="index">
-        <img :src="item" class="image" />
+      <el-carousel-item v-for="(item, index) in carousel" :key="index">
+        <router-link  :to="`/goods/${item.id}`">
+          <img :src="item.image" class="image" />
+        </router-link>
+        
       </el-carousel-item>
     </el-carousel>
-    <el-empty
-      description="抱歉，暂时还没有该分类的图片"
-      style="text-align: center; margin-top: 100px"
-      v-else
-    ></el-empty>
+    <div v-else>
+      <div style="padding: 10px; font-weight: 800;font-size: large;">暂时没有商品展示</div>
+    </div>
     <!-- 轮播图END -->
 
     <div class="main-box">

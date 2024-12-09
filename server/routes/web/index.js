@@ -10,11 +10,13 @@ const productsRoutes = require('./products');
 const slideshowsRoutes = require('./slideshows');
 const commentsRoutes = require('./comments');
 const messagesRoutes = require('./messages');
+const newsRoutes = require('./news');
 
 
 // 挂载各模块路由
 router.use('/dieshot', dieshotRoutes);
 router.use('/tags', tagsRoutes);
+router.use('/news', newsRoutes)
 router.use('/users', usersRoutes);  //用户
 router.use('/products', productsRoutes);    //商品
 router.use('/slideshows', slideshowsRoutes);    //轮播图

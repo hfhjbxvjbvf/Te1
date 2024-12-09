@@ -17,11 +17,19 @@ const routes = [{
       }
     },
     {
-      path: '/archives',
-      name: 'Archive',
-      component: () => import('../views/Archive.vue'),
+      path:'/news',
+      name: 'News',
+      component: () => import( '../views/News.vue'),
       meta: {
-        title: '归档 - QuWei'
+        title: '新闻 - QuWei'
+      }
+    },
+    {
+      path: '/news/:id',
+      name: 'NewsDetail',
+      component: () => import( '../views/NewsDetail.vue'),
+      meta: {
+        title: '新闻详细 - QuWei'
       }
     },
     {
